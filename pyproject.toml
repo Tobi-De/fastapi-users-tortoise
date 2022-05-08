@@ -1,0 +1,62 @@
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+addopts = "--ignore=test_build.py"
+
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "fastapi_users_tortoise"
+
+[project]
+name = "fastapi-users-tortoise"
+authors = [
+    { name = "Tobi DEGNON", email = "degnonfrancis@gmail.com" }
+]
+description = "FastAPI Users - Database adapter for Tortoise ORM"
+readme = "README.md"
+dynamic = ["version"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: FastAPI",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Internet :: WWW/HTTP :: Session",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "fastapi-users >= 10.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "flake8",
+    "pytest",
+    "requests",
+    "isort",
+    "pytest-asyncio",
+    "flake8-docstrings",
+    "black",
+    "mypy",
+    "codecov",
+    "pytest-cov",
+    "pytest-mock",
+    "asynctest",
+    "flit",
+    "bumpversion",
+    "httpx",
+    "asgi_lifespan",
+]
+
+[project.urls]
+Documentation = "https://tobi-de.github.io/fastapi-users-tortoise"
