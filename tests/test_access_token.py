@@ -1,30 +1,61 @@
-from typing import AsyncGenerator, Any
-from datetime import datetime, timezone, timedelta
+import uuid
+from datetime import datetime, timedelta, timezone
+from typing import Any, AsyncGenerator
 
 import pytest
+from tortoise import Tortoise
 
-from fastapi_users_tortoise.access_token import TortoiseORMAccessTokenDatabase
-
-
-@pytest.fixture
-async def tortoise_access_token_db() -> AsyncGenerator[
-    TortoiseORMAccessTokenDatabase, None
-]:
-    raise NotImplementedError()
+from fastapi_users_tortoise import TortoiseBaseUserAccountModelUUID
+from fastapi_users_tortoise.access_token import (
+    TortoiseAccessTokenDatabase,
+    TortoiseBaseAccessTokenModel,
+)
 
 
-@pytest.fixture
-def user_id() -> Any:
-    raise NotImplementedError()
-
-
-class AccessToken:
+class User(TortoiseBaseUserAccountModelUUID):
     pass
+
+
+class AccessToken(TortoiseBaseAccessTokenModel):
+    pass
+
+
+@pytest.fixture
+async def tortoise_access_token_db(
+    user_id: uuid.UUID,
+) -> AsyncGenerator[TortoiseAccessTokenDatabase, None]:
+    DATABASE_URL = "sqlite://./test-tortoise-access-token.db"
+    await Tortoise.init(
+        db_url=DATABASE_URL,
+        modules={"models": ["tests.test_access_token"]},
+    )
+    await Tortoise.generate_schemas()
+
+    user = User(
+        id=user_id,
+        email="lancelot@camelot.bt",
+        hashed_password="guinevere",
+        is_active=True,
+        is_verified=True,
+        is_superuser=False,
+    )
+    await user.save()
+
+    yield TortoiseAccessTokenDatabase(AccessToken)
+
+    await AccessToken.all().delete()
+    await User.all().delete()
+    await Tortoise.close_connections()
+
+
+@pytest.fixture
+def user_id() -> uuid.UUID:
+    return uuid.uuid4()
 
 
 @pytest.mark.asyncio
 async def test_queries(
-    tortoise_access_token_db: TortoiseORMAccessTokenDatabase[AccessToken],
+    tortoise_access_token_db: TortoiseAccessTokenDatabase[AccessToken],
     user_id: Any,
 ):
     access_token_create = {"token": "TOKEN", "user_id": user_id}
@@ -75,7 +106,7 @@ async def test_queries(
 
 @pytest.mark.asyncio
 async def test_insert_existing_token(
-    tortoise_access_token_db:TortoiseORMAccessTokenDatabase[AccessToken],
+    tortoise_access_token_db: TortoiseAccessTokenDatabase[AccessToken],
     user_id: Any,
 ):
     access_token_create = {"token": "TOKEN", "user_id": user_id}
