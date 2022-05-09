@@ -2,6 +2,12 @@
 
 Tortoise orm database adapter for [fastapi-users v10](https://fastapi-users.github.io/fastapi-users/10.0/) and above.
 
+[![pypi](https://badge.fury.io/py/fastapi-users-tortoise.svg)](https://pypi.org/project/fastapi-users-tortoise/)
+[![python](https://img.shields.io/pypi/pyversions/fastapi-users-tortoise)](https://github.com/Tobi-De/fastapi-users-tortoise)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/Tobi-De/fastapi-users-tortoise/blob/master/LICENSE)
+[![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+
 ## Installation
 
 ```sh
