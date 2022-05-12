@@ -44,7 +44,7 @@ async def get_access_token_db():
 
 ```
 
-**Note**: Until the documentation is ready you can use the [fastapi-users sqlalchemy setup guide](https://fastapi-users.github.io/fastapi-users/10.0/configuration/databases/sqlalchemy/) as reference.
+**Note**: Until the documentation is ready you can use the [fastapi-users sqlalchemy setup guide](https://fastapi-users.github.io/fastapi-users/10.0/configuration/databases/sqlalchemy/) as reference. If you want an example of a project using this or just bootstrap your project with fastapi-users and tortoise, you can check out the cookiecutter I'm working on [here](https://github.com/Tobi-De/cookiecutter-fastapi).
 
 
 ## Development
