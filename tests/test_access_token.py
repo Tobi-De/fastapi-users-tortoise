@@ -41,7 +41,7 @@ async def tortoise_access_token_db(
     )
     await user.save()
 
-    yield TortoiseAccessTokenDatabase(AccessToken)
+    yield TortoiseAccessTokenDatabase[AccessToken[uuid.UUID]](AccessToken)
 
     await AccessToken.all().delete()
     await User.all().delete()

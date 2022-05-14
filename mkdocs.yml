@@ -1,0 +1,61 @@
+site_name: Fastapi-users Tortoise
+site_description: Fastapi-users database adapter for TortoiseORM
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: 'deep purple'
+      accent: 'deep purple'
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - scheme: slate
+      primary: 'deep purple'
+      accent: 'deep purple'
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+nav:
+  - index.md
+  - User model and databases: databases.md
+  - Database Authentication backend: authentication.md
+  - oauth2.md
+
+plugins:
+  - include-markdown
+  - search
+
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tabbed
+  - attr_list
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      linenums: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - admonition
+  - toc:
+      baselevel: 2
+      permalink: true
+      slugify: !!python/name:pymdownx.slugs.uslugify
+  - meta
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/Tobi71110248
+      name: Tweet
+    - icon: fontawesome/brands/github
+      link: https://github.com/Tobi-De/fastapi-users-tortoise
+      name: Github
+    - icon: material/email
+      link: "mailto:degnonfrancis@gmail.com"

@@ -1,51 +1,30 @@
 # Fastapi-users-tortoise
 
 Tortoise orm database adapter for [fastapi-users v10](https://fastapi-users.github.io/fastapi-users/10.0/) and above.
+If you want an example of a project using this or just bootstrap your project with fastapi-users and tortoise, you can check out the cookiecutter I'm working on [here](https://github.com/Tobi-De/cookiecutter-fastapi).
 
 [![pypi](https://badge.fury.io/py/fastapi-users-tortoise.svg)](https://pypi.org/project/fastapi-users-tortoise/)
 [![python](https://img.shields.io/pypi/pyversions/fastapi-users-tortoise)](https://github.com/Tobi-De/fastapi-users-tortoise)
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/Tobi-De/fastapi-users-tortoise/blob/master/LICENSE)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+---
+
+**Documentation**: <a href="https://tobi-de.github.io/fastapi-users-tortoise/" target="_blank">https://tobi-de.github.io/fastapi-users-tortoise</a>
+
+**Source Code**: <a href="https://github.com/tobi-de/fastapi-users-tortoise" target="_blank">https://github.com/tobi-de/fastapi-users-tortoise</a>
+
+---
+
+Add quickly a registration and authentication system to your [FastAPI](https://fastapi.tiangolo.com/) project. **FastAPI Users** is designed to be as customizable and adaptable as possible.
+
+**Sub-package for Tortoise ORM support in FastAPI Users.**
 
 ## Installation
 
 ```sh
 pip install fastapi-users-tortoise
 ```
-
-## Usage
-
-```python3
-# models.py
-
-from fastapi_users_tortoise import TortoiseBaseUserAccountModelUUID, TortoiseUserDatabase, TortoiseBaseUserOAuthAccountModelUUID
-from fastapi_users_tortoise.access_token import TortoiseBaseAccessTokenModel, TortoiseAccessTokenDatabase
-from tortoise import fields
-
-class User(TortoiseBaseUserAccountModelUUID):
-    full_name = fields.CharField(max_length=255, null=True)
-    short_name = fields.CharField(max_length=255, null=True)
-
-class OAuthAccount(TortoiseBaseUserOAuthAccountModelUUID):
-    pass
-
-async def get_user_db():
-    yield TortoiseUserDatabase(User)
-
-
-# If you need to store access token to the database
-
-class AccessToken(TortoiseBaseAccessTokenModel):
-    pass
-
-async def get_access_token_db():
-    yield TortoiseAccessTokenDatabase(AccessToken)
-
-```
-
-**Note**: Until the documentation is ready you can use the [fastapi-users sqlalchemy setup guide](https://fastapi-users.github.io/fastapi-users/10.0/configuration/databases/sqlalchemy/) as reference.
-
 
 ## Development
 
@@ -94,10 +73,6 @@ Execute the following command to apply `isort` and `black` formatting:
 ```bash
 make format
 ```
-
-## TODO
-
-- [ ] Improve type hint and generics usage
 
 ## License
 
