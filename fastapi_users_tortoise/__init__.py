@@ -19,11 +19,6 @@ class TortoiseBaseUserAccountModel(models.Model):
       so using generics here to specify the id ID is pointless.
       """
 
-    # if TYPE_CHECKING:
-    #     is_active: bool
-    #     is_superuser: bool
-    #     is_verified: bool
-
     id: Any
     email: str = fields.CharField(index=True, unique=True, null=False, max_length=255)
     hashed_password: str = fields.CharField(null=False, max_length=1024)
