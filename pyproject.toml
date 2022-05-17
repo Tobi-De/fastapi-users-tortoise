@@ -57,10 +57,6 @@ dev = [
     "bumpversion",
     "httpx",
     "asgi_lifespan",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocs-material-extensions",
-    "mkdocs-include-markdown-plugin"
 ]
 
 [project.urls]

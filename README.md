@@ -1,4 +1,4 @@
-# Fastapi-users-tortoise
+# FastAPI Users - Database adapter for Tortoise ORM
 
 Tortoise orm database adapter for [fastapi-users v10](https://fastapi-users.github.io/fastapi-users/10.0/) and above.
 If you want an example of a project using this or just bootstrap your project with fastapi-users and tortoise, you can check out the cookiecutter I'm working on [here](https://github.com/Tobi-De/cookiecutter-fastapi).
