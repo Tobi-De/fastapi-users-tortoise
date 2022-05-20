@@ -7,7 +7,7 @@ from fastapi_users.models import ID, OAP
 from tortoise import fields, models
 from tortoise.exceptions import DoesNotExist
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class TortoiseBaseUserAccountModel(models.Model):
