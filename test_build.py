@@ -2,7 +2,7 @@
 import sys
 
 try:
-    from fastapi_users_tortoise import TortoiseORMUserDatabase
+    from fastapi_users_tortoise import TortoiseUserDatabase
 except:
     sys.exit(1)
 
