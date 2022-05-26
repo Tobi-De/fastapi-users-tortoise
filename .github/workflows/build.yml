@@ -56,7 +56,7 @@ jobs:
           DATABASE_URL: ${{ matrix.database_url }}
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
-          pytest --cov=fastapi_users_db_sqlalchemy/
+          pytest --cov=fastapi_users_tortoise/
           codecov
       - name: Build and install it on system host
         run: |
