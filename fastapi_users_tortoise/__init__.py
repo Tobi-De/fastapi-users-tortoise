@@ -1,13 +1,30 @@
 """FastAPI Users database adapter for Tortoise ORM."""
+from enum import unique
 from typing import Any, Dict, Generic, Optional, Type, TypeVar, cast
+import re
 from uuid import UUID
 
 from fastapi_users.db.base import BaseUserDatabase
 from fastapi_users.models import ID, OAP
 from tortoise import fields, models
-from tortoise.exceptions import DoesNotExist
+from tortoise.exceptions import DoesNotExist, ValidationError
+from tortoise.timezone import now
+from tortoise.validators import RegexValidator
 
 __version__ = "0.2.0"
+
+
+class UsernameValidator(RegexValidator):
+    def __init__(self):
+        pattern = r"^[\w.@+-]+\Z"
+
+        super().__init__(pattern, 0)
+
+    def __call__(self, value: Any):
+        if not self.regex.match(value):
+            raise ValidationError(
+                "Username must only container letters, numbers, and @/./+/-/_ characters."
+            )
 
 
 class TortoiseBaseUserAccountModel(models.Model):
@@ -19,12 +36,36 @@ class TortoiseBaseUserAccountModel(models.Model):
       so using generics here to specify the id ID is pointless.
       """
 
+    username_validator = UsernameValidator()
+
     id: Any
-    email: str = fields.CharField(index=True, unique=True, null=False, max_length=255)
+    first_name = fields.CharField(null=True, max_length=150)
+    last_name = fields.CharField(null=True, max_length=150)
+    username = fields.CharField(
+        null=True, unique=True, max_length=50, validators=[username_validator]
+    )
+    email: str = fields.CharField(
+        index=True,
+        unique=True,
+        null=False,
+        max_length=255,
+    )
     hashed_password: str = fields.CharField(null=False, max_length=1024)
     is_active = fields.BooleanField(default=True, null=False)
     is_superuser = fields.BooleanField(default=False, null=False)
     is_verified = fields.BooleanField(default=False, null=False)
+    date_joined = fields.DatetimeField(default=now)
+
+    def full_name(self):
+        """
+        return first_name and last_name
+        """
+        full_name = f"{self.first_name} {self.last_name}"
+        return full_name.strip()
+
+    class PydanticMeta:
+        computed = ["full_name"]
+        exclude = ["hashed_password"]
 
     class Meta:
         abstract = True
