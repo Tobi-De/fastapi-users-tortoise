@@ -1,5 +1,4 @@
 """FastAPI Users database adapter for Tortoise ORM."""
-from enum import unique
 from typing import Any, Dict, Generic, Optional, Type, TypeVar, cast
 import re
 from uuid import UUID
@@ -17,7 +16,6 @@ __version__ = "0.2.0"
 class UsernameValidator(RegexValidator):
     def __init__(self):
         pattern = r"^[\w.@+-]+\Z"
-
         super().__init__(pattern, 0)
 
     def __call__(self, value: Any):
