@@ -28,7 +28,7 @@ class User(TortoiseBaseUserAccountModelUUID):
 As you can see, **fastapi-users-tortoise** provides a base class that will include base fields for our `User` table. You can of course add you own fields there to fit to your needs!
 
 !!! tip "Primary key is defined as UUID"
-    By default, we use UUID as a primary key ID for your user. If you want to use another type, like an auto-incremented integer, you can use `SQLAlchemyBaseUserTable` as base class and define your own `id` column.
+    By default, we use UUID as a primary key ID for your user. If you want to use another type, like an auto-incremented integer, you can use `TortoiseBaseUserAccountModel` as base class and define your own `id` column.
 
     ```py
     from fastapi_users_tortoise import TortoiseBaseUserAccountModel
