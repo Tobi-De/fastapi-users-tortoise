@@ -3,6 +3,7 @@ from uuid import UUID
 
 import pytest
 from tortoise import Tortoise, fields
+from tortoise.exceptions import ValidationError
 
 from fastapi_users_tortoise import (
     TortoiseBaseUserAccountModelUUID,
@@ -37,7 +38,9 @@ async def tortoise_user_db() -> AsyncGenerator[TortoiseUserDatabase[User, UUID],
 
 
 @pytest.fixture
-async def tortoise_user_db_oauth() -> AsyncGenerator[TortoiseUserDatabase[User, UUID], None]:
+async def tortoise_user_db_oauth() -> AsyncGenerator[
+    TortoiseUserDatabase[User, UUID], None
+]:
     DATABASE_URL = "sqlite://./test-tortoise-user-oauth.db"
 
     await Tortoise.init(
@@ -68,10 +71,22 @@ async def test_queries(
     assert user.is_active is True
     assert user.is_superuser is False
     assert user.email == user_create["email"]
+    assert user.first_name is None
+    assert user.last_name is None
+    assert user.username is None
+    assert user.date_joined is not None
 
     # Update
     updated_user = await tortoise_user_db.update(user, {"is_superuser": True})
     assert updated_user.is_superuser is True
+    
+    # update first and last name
+    first_name = "Lancelot"
+    last_name = "Camelot"
+    updated_user = await tortoise_user_db.update(user, {"first_name": first_name, "last_name": last_name})
+    assert updated_user.first_name == first_name
+    assert updated_user.last_name == last_name
+    assert updated_user.full_name() == f"{first_name} {last_name}"
 
     # Get by id
     id_user = await tortoise_user_db.get(user.id)
@@ -236,3 +251,20 @@ async def test_queries_oauth(
     # Unknown OAuth account
     unknown_oauth_user = await tortoise_user_db_oauth.get_by_oauth_account("foo", "bar")
     assert unknown_oauth_user is None
+
+
+@pytest.mark.asyncio
+async def test_username_validation(tortoise_user_db: TortoiseUserDatabase[User, UUID]):
+    user_create = {
+        "username": "lancee007",
+        "email": "lancelot@camelot.bt",
+        "hashed_password": "guinevere",
+    }
+
+    # Create
+    user = await tortoise_user_db.create(user_create)
+    assert user.username == user_create["username"]
+    
+    # update to invalid
+    with pytest.raises(ValidationError):
+        await tortoise_user_db.update(user, {"username": "lance&lot"})
